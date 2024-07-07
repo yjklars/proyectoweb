@@ -1,0 +1,38 @@
+/* Banner TIENDA */
+.bannerContainer {
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  height: 400px;
+}
+
+.bannerImage {
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+/* ----------------------------- */
+/* Carrusel TIENDA */
+.c-1-item {
+  height: 400px;
+}
+
+.c-1-img {
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+/* ----------------------------- */
+/* Footer */
+.icono {
+  height: 50px;
+  width: 50px;
+}
+
+/* ----------------------------- */
+/* Conjunto de juegos TIENDA */
+.oferta {
+  background-color: rgb(92, 27, 38);
+}/*# sourceMappingURL=stylesPersonalizados.css.map */
