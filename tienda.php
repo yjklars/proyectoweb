@@ -28,7 +28,7 @@
                             <a class="nav-link" href="nosotros.php">ACERCA DE NOSOTROS</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">SOPORTE</a>
+                            <a class="nav-link" href="soporte.php">SOPORTE</a>
                         </li>
                         <li>
                             <a class="nav-link" href="#"></a>
@@ -41,8 +41,8 @@
         </nav>
     </div>
     <!-- beige/bisque/blanchedalmond -->
-    <div class="container-fluid mb-4 p-0" style="background-color:#121212">
-        <div class="container-fluid">
+    <div class="container-fluid mb-1 p-0" style="background-color:#121212">
+        <div class="container-fluid pb-5">
             <div class="row">
                 <div class="col-md-4 bannerContainer bg-black">
                     <a href="..."><img class="d-block w-100 m-0 p-0 bannerImage" src="Images/elden-ring-banner.png" alt="Elden Ring DLC"></a>
@@ -50,52 +50,10 @@
             </div>
         </div>
         
-        <!-- Carrusel de juegos 1 -->
-        <div class="container-fluid my-5">
-            <div class="container">
-                <div class="row m-0 p-0">
-                    <div class="col m-0 p-0">
-                        <div id="carousel-1" class="carousel slide">
-                            <div class="carousel-indicators">
-                                <button type="button" data-bs-target="#carousel-1" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Juego 1"></button>
-                                <button type="button" data-bs-target="#carousel-1" data-bs-slide-to="1" aria-label="Juego 2"></button>
-                                <button type="button" data-bs-target="#carousel-1" data-bs-slide-to="2" aria-label="Juego 3"></button>
-                                <button type="button" data-bs-target="#carousel-1" data-bs-slide-to="3" aria-label="Juego 4"></button>
-                                <button type="button" data-bs-target="#carousel-1" data-bs-slide-to="4" aria-label="Juego 5"></button>
-                            </div>
-                            <div class="carousel-inner">
-                                <div class="carousel-item active c-1-item">
-                                    <img src="Images/counter-strike-2-carousel.jpeg" class="d-block w-100 c-1-img" alt="...">
-                                </div>
-                                <div class="carousel-item c-1-item">
-                                    <img src="Images/rdr-2-4k-carousel.png" class="d-block w-100 c-1-img" alt="...">
-                                </div>
-                                <div class="carousel-item c-1-item">
-                                    <img src="Images/sea-arreglado-carousel.png" class="d-block w-100 c-1-img" alt="...">
-                                </div>
-                                <div class="carousel-item c-1-item">
-                                    <img src="Images/metroid-dread-carousel.png" class="d-block w-100 c-1-img" alt="...">
-                                </div>
-                                <div class="carousel-item c-1-item">
-                                    <img src="Images/baldurs-gate-3-carousel.jpg" class="d-block w-100 c-1-img" alt="...">
-                                </div>
-                            </div>
-                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-1" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                            </button>
-                            <button class="carousel-control-next" type="button" data-bs-target="#carousel-1" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
 
         <!-- Conjunto de juegos -->
-        <div class="container-fluid mb-5">
+        <div class="container-fluid pb-5">
             <div class="container" >
                 <div class="row">
                     <div class="col-3">
@@ -164,9 +122,53 @@
             </div>
         </div>
 
+
+        <!-- Carrusel de juegos 1 -->
+        <div class="container-fluid my-5">
+            <div class="container">
+                <div class="row m-0 p-0">
+                    <div class="col m-0 p-0">
+                        <div id="carousel-1" class="carousel slide">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#carousel-1" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Juego 1"></button>
+                                <button type="button" data-bs-target="#carousel-1" data-bs-slide-to="1" aria-label="Juego 2"></button>
+                                <button type="button" data-bs-target="#carousel-1" data-bs-slide-to="2" aria-label="Juego 3"></button>
+                                <button type="button" data-bs-target="#carousel-1" data-bs-slide-to="3" aria-label="Juego 4"></button>
+                                <button type="button" data-bs-target="#carousel-1" data-bs-slide-to="4" aria-label="Juego 5"></button>
+                            </div>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active c-1-item">
+                                    <img src="Images/counter-strike-2-carousel.jpeg" class="d-block w-100 c-1-img" alt="...">
+                                </div>
+                                <div class="carousel-item c-1-item">
+                                    <img src="Images/rdr-2-4k-carousel.png" class="d-block w-100 c-1-img" alt="...">
+                                </div>
+                                <div class="carousel-item c-1-item">
+                                    <img src="Images/sea-arreglado-carousel.png" class="d-block w-100 c-1-img" alt="...">
+                                </div>
+                                <div class="carousel-item c-1-item">
+                                    <img src="Images/metroid-dread-carousel.png" class="d-block w-100 c-1-img" alt="...">
+                                </div>
+                                <div class="carousel-item c-1-item">
+                                    <img src="Images/baldurs-gate-3-carousel.jpg" class="d-block w-100 c-1-img" alt="...">
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-1" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carousel-1" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Grid de juegos 2 (tam imagen: 616x353px) -->
 
-        <div class="container-fluid my-5">
+        <div class="container-fluid py-5">
             <div class="container">
                 <div class="row">
                     <div class="col-4">
@@ -196,6 +198,72 @@
                         <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">50%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 14.030</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 7.015</span>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid pt-5 pb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-1">
+                    <h5><strong>Redes</strong></h5>
+                    <div class="row">
+                        <div class="col-1">
+                            <a href="https://es-la.facebook.com/" target="_blank"><img src="Images/facebook-icon.png" style="height: 40px; width: 40px;"></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1">
+                            <a href="https://x.com/?lang-en=" target="_blank"><img src="Images/twitter-icon.png" style="height: 40px; width: 40px;"></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1">
+                            <a href="https://www.instagram.com/" target="_blank"><img src="Images/instagram-icon.png" style="height: 40px; width: 40px;"></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1">
+                            <a href="https://www.youtube.com/" target="_blank"><img src="Images/youtube-icon.png" style="height: 40px; width: 40px;"></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-1">
+                            <a href="https://discord.com/" target="_blank"><img src="Images/discord-icon.png" style="height: 40px; width: 40px;"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 text-center">
+                    <h5><strong>Tiendas asociadas</strong></a></h5>
+                    <div class="row mt-2">
+                        <p><a href="https://store.steampowered.com/?l=spanish" class="link-light link-underline link-underline-opacity-0" target="_blank">Steam</a></p>
+                        <p><a href="https://store.epicgames.com/es-ES/" class="link-light link-underline link-underline-opacity-0" target="_blank">Epic Games</a></p>
+                        <p><a href="https://www.gog.com/" class="link-light link-underline link-underline-opacity-0" target="_blank">GoG.com</a></p>
+                        <p><a href="https://itch.io/" class="link-light link-underline link-underline-opacity-0" target="_blank">Itch.io</a></p>
+                    </div>
+                </div>
+                <div class="col-7">
+                    <h5 class="text-center"><strong>Ancient</strong></h5>
+                    <div class="row">
+                        <p>
+                            Ancient es tu destino definitivo para comprar y 
+                            disfrutar de los mejores juegos digitales. 
+                            Con una selección curada de títulos y ofertas exclusivas, 
+                            nos dedicamos a ofrecerte una experiencia de juego inigualable. 
+                            Síguenos en nuestras redes sociales y únete a nuestra comunidad de apasionados gamers. ¡Gracias por elegir Ancient!
+                        </p>
+                    </div>
+                    <div class="row text-center">
+                        <span>Contacto:</span>
+                        <span>
+                            soporte@ancient.com
+                            <br>+1 (123) 456-7890
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-center">
+                <span>© 2024 Ancient. Todos los derechos reservados.</span>
             </div>
         </div>
     </div>
