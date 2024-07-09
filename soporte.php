@@ -148,6 +148,51 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modificar con php la visualización de este apartado: 
+        1) Si se tiene una sesion inciada: te permitirá hacer preguntas especificas para cada videojuego.
+        2) Si no se tiene una sesion iniciada: te aconsejará iniciar sesión para poder realizar una pregunta específica.
+        -->
+        <div class="container pt-5 pb-4">
+            <div class="row pb-5">
+                <div class="col-6">
+                    <h1>Soporte específico por videojuego</h1>
+                </div>
+            </div>
+            <!-- Con php automatizar el elemento 'select' de Bootstrap para que reconozca los juegos en la base de datos
+            De esta manera poder actualizar este elemento a medida que se inserten o eliminen juegos.
+            -->
+            <form class="needs-validation" novalidate data-bs-theme="dark">
+                <div class="row">
+                    <div class="col-6">
+                        <label for="seleccion1" class="form-label">Seleccione el juego de la siguiente lista desplegable</label>
+                        <select id="seleccion1" class="form-select" name="seleccion1" required>
+                            <option selected disabled value="">Seleccione el juego</option>
+                            <option value="#">Juego 1</option>
+                            <option value="#">Juego 2</option>
+                            <option value="#">Juego 3</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-6">
+                        <label for="asuntoJuego" class="form-label">Describa brevemente su problema</label>
+                        <input id="asuntoJuego" class="form-control" name="asuntoJuego" placeholder="Asunto del problema" required>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-6">
+                        <label for="mensajeSoporte" class="form-label">Describa detalladamente su problema:</label>
+                        <textarea type="text-area" class="form-control" id="mensajeSoporte" name="mensajeSoporte" placeholder="Mencionar juego, y situación específica, fecha, etc." rows="3" required></textarea>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-6 text-center">
+                        <button type="submit" class="btn btn-secondary">Enviar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
 
@@ -217,6 +262,28 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+            }, false)
+        })
+        })()
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

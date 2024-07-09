@@ -79,7 +79,51 @@
                 </div>
             </div>
         </div>
+        <!-- Formulario de contacto simple -->
+        <div class="container pb-4">
+            <form class="needs-validation" novalidate>
+                <div class="row justify-content-center">
+                    <div class="col-4 text-center">
+                        <h4>Contáctanos:</h4>
+                    </div>
+                </div>
+                <div class="row mt-2 justify-content-center">
+                    <div class="col-4">
+                        <label for="correoContacto" class="form-label">Correo electrónico</label>
+                        <input type="email" class="form-control" id="correoContacto" name="correoContacto" placeholder="correo@ejemplo.com" required>
+                        <div class="invalid-feedback">
+                            Debe ingresar un correo electrónico válido!
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2 justify-content-center">
+                    <div class="col-4">
+                        <label for="asuntoContacto" class="form-label">Asunto</label>
+                        <input type="text" class="form-control" id="asuntoContacto" name="asuntoContacto" placeholder="Escribe el asunto de tu correo" required>
+                        <div class="invalid-feedback">
+                            Escriba un asunto!
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2 justify-content-center">
+                    <div class="col-4">
+                        <textarea type="text-area" class="form-control" id="mensajeContacto" name="mensajeContacto" placeholder="Escribe tu mensaje" rows="3" required></textarea>
+                        <div class="invalid-feedback">
+                            Escriba un mensaje!
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2 justify-content-center">
+                    <div class="col-4 text-center">
+                        <button type="submit" class="btn btn-secondary">Enviar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
+
+
+
     <!-- Footer -->
     <div class="container-fluid pt-5 pb-4">
         <div class="container">
@@ -146,6 +190,29 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+            }, false)
+        })
+        })()
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
