@@ -34,8 +34,13 @@
                             <a class="nav-link" href="#"></a>
                         </li>
                     </ul>
-                    <a class="nav-link text-white-50 p-1" href="#">INICIAR SESION</a>
-                    <a class="nav-link text-white-50 p-1" href="#">REGISTRARSE</a>
+                    <div class="dropdown" data-bs-theme="dark">
+                        <a class="nav-link dropdown-toggle text-white-50 p-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">SESION</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="iniciar-sesion.php">INICIAR SESION</a></li>
+                            <li><a class="dropdown-item" href="registrarse.php">REGISTRARSE</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div> 
         </nav>

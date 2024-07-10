@@ -31,8 +31,13 @@
                             <a class="nav-link" href="#"></a>
                         </li>
                     </ul>
-                    <a class="nav-link text-white-50 p-1" href="#">INICIAR SESION</a>
-                    <a class="nav-link text-white-50 p-1" href="#">REGISTRARSE</a>
+                    <div class="dropdown" data-bs-theme="dark">
+                        <a class="nav-link dropdown-toggle text-white-50 p-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">SESION</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="iniciar-sesion.php">INICIAR SESION</a></li>
+                            <li><a class="dropdown-item" href="registrarse.php">REGISTRARSE</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div> 
         </nav>
@@ -163,7 +168,7 @@
             De esta manera poder actualizar este elemento a medida que se inserten o eliminen juegos.
             -->
             <form class="needs-validation" novalidate data-bs-theme="dark">
-                <div class="row">
+                <div class="row justify-content-center">
                     <div class="col-6">
                         <label for="seleccion1" class="form-label">Seleccione el juego de la siguiente lista desplegable</label>
                         <select id="seleccion1" class="form-select" name="seleccion1" required>
@@ -174,19 +179,19 @@
                         </select>
                     </div>
                 </div>
-                <div class="row mt-2">
+                <div class="row mt-2 justify-content-center">
                     <div class="col-6">
                         <label for="asuntoJuego" class="form-label">Describa brevemente su problema</label>
                         <input id="asuntoJuego" class="form-control" name="asuntoJuego" placeholder="Asunto del problema" required>
                     </div>
                 </div>
-                <div class="row mt-2">
+                <div class="row mt-2 justify-content-center">
                     <div class="col-6">
                         <label for="mensajeSoporte" class="form-label">Describa detalladamente su problema:</label>
                         <textarea type="text-area" class="form-control" id="mensajeSoporte" name="mensajeSoporte" placeholder="Mencionar juego, y situación específica, fecha, etc." rows="3" required></textarea>
                     </div>
                 </div>
-                <div class="row mt-2">
+                <div class="row mt-2 justify-content-center">
                     <div class="col-6 text-center">
                         <button type="submit" class="btn btn-secondary">Enviar</button>
                     </div>
