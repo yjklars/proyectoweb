@@ -54,6 +54,11 @@
                         <h3>REGISTRARSE</h3>
                     </div>
                 </div>
+                <div class="row mt-4 text-center">
+                    <div class="col">
+                        <p1>Para <strong>registrarse</strong> llene los campos necesarios a continuación.</p1>
+                    </div>
+                </div>
                 <div class="row mt-4 justify-content-center">
                     <div class="col-4">
                         <input type="text" class="form-control" name="usuario" placeholder="Ingrese un usuario" required>
@@ -344,21 +349,13 @@
                     <div class="col-4">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="condiciones" required>
-                            <label class="form-check-label" for="condiciones">Acepto los terminos y condiciones</label>
+                            <label class="form-check-label" for="condiciones">Acepto los terminos y condiciones.</label>
                         </div>
                     </div>
                 </div>
-                <div class="row mt-4 justify-content-center text-center">
+                <div class="row mt-4 mb-5 justify-content-center text-center">
                     <div class="col-4">
                         <button type="submit" class="btn btn-secondary">Iniciar sesión</button>
-                    </div>
-                </div>
-                <div class="row mt-4 mb-5 justify-content-center">
-                    <div class="col-2 text-center">
-                        <span><a href="#">¿Olvidaste tu contraseña?</a></span>
-                    </div>
-                    <div class="col-2 text-center">
-                        <span><a href="#">¿No estás registrado?</a></span>
                     </div>
                 </div>
             </form>

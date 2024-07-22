@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ancient</title>
-
     <link rel="stylesheet" href="Bootstrap/styles.css">
     <link rel="stylesheet" href="Bootstrap/stylesPersonalizados.css">
 </head>
@@ -42,44 +41,42 @@
             </div> 
         </nav>
     </div>
-    <!-- Inicio de sesion:
-    1)Sin codigo php, se busca que los inputs se encuentren validados solo para el ingreso de algun valor.
-    2)Cuando se aplique php, se buscará implementar que el user este registrado, la contraseña correcta. 
+    
+    <!-- Registro:
+    1)Sin codigo php, se busca validar solo la entrada de datos del formulario.
+    2)Cuando se aplique php, se buscará implementar que el user recupere su contraseña a partir de la validación de usuario y correo eléctronico registrado.
     -->
     <div class="container-fluid pt-2 pb-5" style="background-color:#121212">
         <div class="container pt-5 pb-3 px-5 my-5">
             <form class="needs-validation border border-5 bg-secondary-subtle" novalidate data-bs-theme="dark">
                 <div class="row justify-content-center text-center pt-5">
                     <div class="col-4">
-                        <h3>INICIO DE SESION</h3>
+                        <h3>RECUPERAR CONTRASEÑA</h3>
                     </div>
                 </div>
                 <div class="row mt-4 text-center">
                     <div class="col">
-                        <p1>Inicia sesión rellenando los campos a continuación.</p1>
+                        <p1>Puedes <strong>recuperar tu contraseña</strong>, cambiandola a una <strong>nueva</strong>, una vez sea verificado correctamente el <strong>usuario</strong> y el <strong>email</strong> asociado a su cuenta.</p1>
                     </div>
                 </div>
                 <div class="row mt-4 justify-content-center">
                     <div class="col-4">
-                        <input type="text" class="form-control" name="usuario" placeholder="Usuario" required>
+                        <input type="text" class="form-control" name="usuario" placeholder="Ingrese su usuario registrado" required>
                     </div>
                 </div>
-                <div class="row mt-5 justify-content-center">
+                <div class="row mt-4 justify-content-center">
                     <div class="col-4">
-                        <input type="password" class="form-control" name="clave" placeholder="Contraseña" required>
+                        <input type="email" class="form-control" name="correo" placeholder="Ingrese su correo electrónico registrado" required>
                     </div>
                 </div>
-                <div class="row mt-5 justify-content-center text-center">
+                <div class="row mt-4 justify-content-center">
                     <div class="col-4">
-                        <button type="submit" class="btn btn-secondary">Iniciar sesión</button>
+                        <input type="password" class="form-control" name="clave" placeholder="Ingrese una nueva contraseña" required>
                     </div>
                 </div>
-                <div class="row mt-4 mb-5 justify-content-center">
-                    <div class="col-2 text-center">
-                        <span><a href="recuperar-password.php">¿Olvidaste tu contraseña?</a></span>
-                    </div>
-                    <div class="col-2 text-center">
-                        <span><a href="registrarse.php">¿No estás registrado?</a></span>
+                <div class="row mt-4 mb-5 justify-content-center text-center">
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-secondary">Cambiar contraseña</button>
                     </div>
                 </div>
             </form>
