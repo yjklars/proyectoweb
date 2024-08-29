@@ -1,17 +1,7 @@
-<?php
-$error=isset($_GET['error'])?$_GET['error'] : '';
-if ($error == 1){
-    $text_error="El usuario no se encuentra registrado!";
-}
-else{
-    $text_error="El correo eletrónico no se encuentra registrado!";
-}
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ancient</title>
     <link rel="stylesheet" href="Bootstrap/styles.css">
@@ -51,63 +41,14 @@ else{
             </div> 
         </nav>
     </div>
-    
-    <!-- Registro:
-    1)Sin codigo php, se busca validar solo la entrada de datos del formulario.
-    2)Cuando se aplique php, se buscará implementar que el user recupere su contraseña a partir de la validación de usuario y correo eléctronico registrado.
-    -->
+
     <div class="container-fluid pt-2 pb-5" style="background-color:#121212">
         <div class="container pt-5 pb-3 px-5 my-5">
-            <form action="conexion/recuperar.php" method="POST" class="needs-validation border border-5 bg-secondary-subtle" novalidate data-bs-theme="dark">
-                <div class="row justify-content-center text-center pt-5">
-                    <div class="col-4">
-                        <h3>RECUPERAR CONTRASEÑA</h3>
-                    </div>
-                </div>
-                <div class="row mt-4 text-center">
-                    <div class="col">
-                        <p1>Puedes <strong>recuperar tu contraseña</strong>, cambiandola a una <strong>nueva</strong>, una vez sea verificado correctamente el <strong>usuario</strong> y el <strong>email</strong> asociado a su cuenta.</p1>
-                    </div>
-                </div>
-                <div class="row mt-4 justify-content-center">
-                    <div class="col-4">
-                        <input type="text" class="form-control" name="usuario" placeholder="Ingrese su usuario registrado" required>
-                    </div>
-                </div>
-                <div class="row mt-4 justify-content-center">
-                    <div class="col-4">
-                        <input type="email" class="form-control" name="email" placeholder="Ingrese su correo electrónico registrado" required>
-                    </div>
-                </div>
-                <div class="row mt-4 justify-content-center">
-                    <div class="col-4">
-                        <input type="password" class="form-control" name="clave" placeholder="Ingrese una nueva contraseña" required>
-                    </div>
-                </div>
-                <div class="row mt-4 mb-5 justify-content-center text-center">
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-secondary">Cambiar contraseña</button>
-                    </div>
-                </div>
-            </form>
+            <h1>Registro exitoso!</h1>
+            <p><br><br>Ya se encuentra registrada su nueva contraseña! Esperamos que disfrute del catálogo de videojuegos y de nuestras increíbles ofertas!</p>
+            <p><a href="iniciar-sesion.php">Iniciar sesión</a> o <a href="tienda.php">volver a la tienda.</a></p>
         </div>
-    </div>
-
-    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true" data-bs-theme="dark">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <?php echo $text_error; ?>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
+        <br><br><br><br>
     </div>
 
     <!-- Footer -->
@@ -198,16 +139,6 @@ else{
         })
         })()
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var error = "<?php echo $error; ?>";
-            if (error) {
-                var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
-                errorModal.show();
-            }
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

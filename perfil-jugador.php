@@ -1,12 +1,16 @@
 <?php
-$error=isset($_GET['error'])?$_GET['error'] : '';
-if ($error == 1){
-    $text_error="El usuario no se encuentra registrado!";
-}
-else{
-    $text_error="El correo eletrónico no se encuentra registrado!";
-}
+include("conexion/conexion.php"); 
+session_start();
+$con=conectar();
+
+$id_usuario=$_SESSION['IDUSUARIO'];
+
+$sql="SELECT * FROM usuario WHERE idusuario='$id_usuario'";
+$query=mysqli_query($con,$sql);
+$row=mysqli_fetch_array($query);
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -27,6 +31,7 @@ else{
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <!-- Mejorar con PHP el resalte de la fuente, dependiendo en qué página nos encontremos -->
                         <li class="nav-item">
                             <a class="nav-link" href="tienda.php">TIENDA</a> 
                         </li>
@@ -40,6 +45,7 @@ else{
                             <a class="nav-link" href="#"></a>
                         </li>
                     </ul>
+                    <?php if(!isset($_SESSION['USUARIO'])){ ?>
                     <div class="dropdown" data-bs-theme="dark">
                         <a class="nav-link dropdown-toggle text-white-50 p-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">SESION</a>
                         <ul class="dropdown-menu">
@@ -47,64 +53,74 @@ else{
                             <li><a class="dropdown-item" href="registrarse.php">REGISTRARSE</a></li>
                         </ul>
                     </div>
+                    <?php }?>
+                    <?php if(isset($_SESSION['USUARIO'])){ ?>
+                    <div class="dropdown" data-bs-theme="dark">
+                        <a class="nav-link dropdown-toggle text-white-100 p-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $_SESSION['USUARIO'];?></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="perfil-jugador.php">MI PERFIL</a></li>
+                            <li><a class="dropdown-item" href="conexion/logout.php">CERRAR SESION</a></li>
+                        </ul>
+                    </div>
+                    <?php }?>
                 </div>
             </div> 
         </nav>
     </div>
-    
-    <!-- Registro:
-    1)Sin codigo php, se busca validar solo la entrada de datos del formulario.
-    2)Cuando se aplique php, se buscará implementar que el user recupere su contraseña a partir de la validación de usuario y correo eléctronico registrado.
-    -->
-    <div class="container-fluid pt-2 pb-5" style="background-color:#121212">
-        <div class="container pt-5 pb-3 px-5 my-5">
-            <form action="conexion/recuperar.php" method="POST" class="needs-validation border border-5 bg-secondary-subtle" novalidate data-bs-theme="dark">
-                <div class="row justify-content-center text-center pt-5">
-                    <div class="col-4">
-                        <h3>RECUPERAR CONTRASEÑA</h3>
-                    </div>
-                </div>
-                <div class="row mt-4 text-center">
-                    <div class="col">
-                        <p1>Puedes <strong>recuperar tu contraseña</strong>, cambiandola a una <strong>nueva</strong>, una vez sea verificado correctamente el <strong>usuario</strong> y el <strong>email</strong> asociado a su cuenta.</p1>
-                    </div>
-                </div>
-                <div class="row mt-4 justify-content-center">
-                    <div class="col-4">
-                        <input type="text" class="form-control" name="usuario" placeholder="Ingrese su usuario registrado" required>
-                    </div>
-                </div>
-                <div class="row mt-4 justify-content-center">
-                    <div class="col-4">
-                        <input type="email" class="form-control" name="email" placeholder="Ingrese su correo electrónico registrado" required>
-                    </div>
-                </div>
-                <div class="row mt-4 justify-content-center">
-                    <div class="col-4">
-                        <input type="password" class="form-control" name="clave" placeholder="Ingrese una nueva contraseña" required>
-                    </div>
-                </div>
-                <div class="row mt-4 mb-5 justify-content-center text-center">
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-secondary">Cambiar contraseña</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
 
-    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true" data-bs-theme="dark">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="container-fluid mb-1 p-0" style="background-color:#121212">
+        <div class="container pt-5">
+            <div class="row">
+                <div class="col-3">
                 </div>
-                <div class="modal-body">
-                    <?php echo $text_error; ?>
+                <div class="col-6 text-center border border-5 bg-secondary-subtle" data-bs-theme="dark">
+                    <div class="row">
+                        <div class="col text-center">
+                            <h1>Mi Perfil</h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5>Usuario:</h5>
+                        </div>
+                        <div class="col">
+                            <p><?php echo $row['USUARIO'];?></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5>Correo:</h5>
+                        </div>
+                        <div class="col">
+                            <p><?php echo $row['EMAIL'];?></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5>Nombre:</h5>
+                        </div>
+                        <div class="col">
+                            <p><?php echo $row['NOMBRE'];?></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5>Género:</h5>
+                        </div>
+                        <div class="col">
+                            <p><?php echo $row['GENERO'];?></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <h5>País de residencia:</h5>
+                        </div>
+                        <div class="col">
+                            <p><?php echo $row['PAIS'];?></p>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <div class="col-3">
                 </div>
             </div>
         </div>
@@ -176,38 +192,7 @@ else{
             </div>
         </div>
     </div>
-
-    <script>
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
-        (() => {
-        'use strict'
-
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        const forms = document.querySelectorAll('.needs-validation')
-
-        // Loop over them and prevent submission
-        Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-            if (!form.checkValidity()) {
-                event.preventDefault()
-                event.stopPropagation()
-            }
-
-            form.classList.add('was-validated')
-            }, false)
-        })
-        })()
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var error = "<?php echo $error; ?>";
-            if (error) {
-                var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
-                errorModal.show();
-            }
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
 </body>
 </html>

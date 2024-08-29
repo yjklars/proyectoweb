@@ -1,3 +1,10 @@
+<?php
+include("conexion/conexion.php"); 
+session_start();
+$con=conectar();
+?>
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,7 +19,7 @@
     <div class="container">
         <nav class="navbar navbar-dark navbar-expand-lg body-tertiary p-4">
             <div class="container-fluid">
-                <span class="navbar-brand h1">Ancient</span>
+                <a href="tienda.php" class="me-3"><img src="Images/Ancient-white-logo.png" style="height: 70px; width: 70px;"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -31,6 +38,7 @@
                             <a class="nav-link" href="#"></a>
                         </li>
                     </ul>
+                    <?php if(!isset($_SESSION['USUARIO'])){ ?>
                     <div class="dropdown" data-bs-theme="dark">
                         <a class="nav-link dropdown-toggle text-white-50 p-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">SESION</a>
                         <ul class="dropdown-menu">
@@ -38,6 +46,16 @@
                             <li><a class="dropdown-item" href="registrarse.php">REGISTRARSE</a></li>
                         </ul>
                     </div>
+                    <?php }?>
+                    <?php if(isset($_SESSION['USUARIO'])){ ?>
+                    <div class="dropdown" data-bs-theme="dark">
+                        <a class="nav-link dropdown-toggle text-white-100 p-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $_SESSION['USUARIO'];?></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="perfil-jugador.php">MI PERFIL</a></li>
+                            <li><a class="dropdown-item" href="conexion/logout.php">CERRAR SESION</a></li>
+                        </ul>
+                    </div>
+                    <?php }?>
                 </div>
             </div> 
         </nav>

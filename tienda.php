@@ -1,3 +1,11 @@
+<?php
+include("conexion/conexion.php"); 
+session_start();
+$con=conectar();
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,7 +22,7 @@
     <div class="container">
         <nav class="navbar navbar-dark navbar-expand-lg body-tertiary p-4">
             <div class="container-fluid">
-                <span class="navbar-brand h1">Ancient</span>
+                <a href="tienda.php" class="me-3"><img src="Images/Ancient-white-logo.png" style="height: 70px; width: 70px;"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -34,6 +42,7 @@
                             <a class="nav-link" href="#"></a>
                         </li>
                     </ul>
+                    <?php if(!isset($_SESSION['USUARIO'])){ ?>
                     <div class="dropdown" data-bs-theme="dark">
                         <a class="nav-link dropdown-toggle text-white-50 p-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">SESION</a>
                         <ul class="dropdown-menu">
@@ -41,6 +50,16 @@
                             <li><a class="dropdown-item" href="registrarse.php">REGISTRARSE</a></li>
                         </ul>
                     </div>
+                    <?php }?>
+                    <?php if(isset($_SESSION['USUARIO'])){ ?>
+                    <div class="dropdown" data-bs-theme="dark">
+                        <a class="nav-link dropdown-toggle text-white-100 p-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $_SESSION['USUARIO'];?></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="perfil-jugador.php">MI PERFIL</a></li>
+                            <li><a class="dropdown-item" href="conexion/logout.php">CERRAR SESION</a></li>
+                        </ul>
+                    </div>
+                    <?php }?>
                 </div>
             </div> 
         </nav>
@@ -59,15 +78,17 @@
 
         <!-- Conjunto de juegos -->
         <div class="container-fluid pb-5">
-            <div class="container" >
+            <div class="container">
                 <div class="row">
                     <div class="col-3">
                         <img src="Images/farcry-6-container-2.jpg" class="img-fluid">
                         <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">80%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 45.000</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 9.000</span>
                     </div>
                     <div class="col-3">
-                        <img src="Images/re-4-remake-container-2.jpg" class="img-fluid">
-                        <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">35%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 35.750</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 23.238</span>
+                        <a href="pagina-juego.php" class="link-light link-underline-dark link-underline-opacity-0">
+                            <img src="Images/re-4-remake-container-2.jpg" class="img-fluid">
+                            <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">35%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 35.750</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 23.238</span>
+                        </a>                    
                     </div>
                     <div class="col-3">
                         <img src="Images/fallout-76-container-2.jpg" class="img-fluid">
@@ -207,6 +228,7 @@
         </div>
     </div>
 
+    <!-- Footer -->
     <div class="container-fluid pt-5 pb-4">
         <div class="container">
             <div class="row">
