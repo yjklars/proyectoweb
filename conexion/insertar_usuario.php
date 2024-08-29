@@ -23,7 +23,7 @@
         header("Location: ../registrarse.php?error=2");
         exit();
     }else{
-        $sql="INSERT INTO usuario VALUES (null,'$usuario','$clave','$email','$nombre','$genero','$pais',0)";
+        $sql="INSERT INTO usuario (idusuario, usuario, clave, email, nombre, genero, pais, adm) VALUES (null,'$usuario','$clave','$email','$nombre','$genero','$pais',0)";
         $query=mysqli_query($con,$sql);
         if ($query) {
             Header("Location: ../registro-exitoso.php");
