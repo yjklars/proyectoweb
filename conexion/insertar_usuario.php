@@ -24,10 +24,26 @@
         exit();
     }else{
         $sql="INSERT INTO usuario (idusuario, usuario, clave, email, nombre, genero, pais, adm) VALUES (null,'$usuario','$clave','$email','$nombre','$genero','$pais',0)";
-        $query=mysqli_query($con,$sql);
-        if ($query) {
-            Header("Location: ../registro-exitoso.php");
-            exit();
+        $query1=mysqli_query($con,$sql);
+        $sql="SELECT MAX(idusuario) as id_usuario FROM usuario";
+        $query3=mysqli_query($con,$sql);
+
+        $resuldato=mysqli_fetch_array($query3);
+        $id_usuario=$resuldato['id_usuario'];
+        $sql="INSERT INTO carrito (idcarrito, idusuario, idjuego) VALUES (null, $id_usuario, null)";
+        $query2=mysqli_query($con,$sql);
+
+        if ($query1) {
+            if($query2){
+                if($query3){
+                    Header("Location: ../registro-exitoso.php");
+                    exit();
+                }else{
+                    echo "Hubo un error al encontrar el usuario.";
+                }
+            }else{
+                echo "Hubo un error al insertar el carrito.";
+            }
         } else {
             echo "Hubo un error al registrar el usuario.";
         }

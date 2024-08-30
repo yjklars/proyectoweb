@@ -28,6 +28,9 @@ $con=conectar();
                             <a class="nav-link" href="tienda.php">TIENDA</a> 
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="categorias.php">TODOS LOS JUEGOS</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="nosotros.php">ACERCA DE NOSOTROS</a>
                         </li>
                         <li class="nav-item">
@@ -51,6 +54,7 @@ $con=conectar();
                         <a class="nav-link dropdown-toggle text-white-100 p-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $_SESSION['USUARIO'];?></a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="perfil-jugador.php">MI PERFIL</a></li>
+                            <li><a class="dropdown-item" href="carro-de-compra.php">MI CARRITO</a></li>
                             <li><a class="dropdown-item" href="conexion/logout.php">CERRAR SESION</a></li>
                         </ul>
                     </div>

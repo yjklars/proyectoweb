@@ -2,10 +2,12 @@
 include("conexion/conexion.php"); 
 session_start();
 $con=conectar();
+$error=isset($_GET['error'])?$_GET['error'] : '';
+$valido=isset($_GET['valido'])?$_GET['valido'] : '';
 
-$id_usuario=$_SESSION['IDUSUARIO'];
+$id=$_GET['id'];
 
-$sql="SELECT * FROM usuario WHERE idusuario='$id_usuario'";
+$sql="SELECT * from juego WHERE idjuego='$id'";
 $query=mysqli_query($con,$sql);
 $row=mysqli_fetch_array($query);
 
@@ -45,10 +47,7 @@ $row=mysqli_fetch_array($query);
                             <a class="nav-link" href="soporte.php">SOPORTE</a>
                         </li>
                         <li>
-                            <?php if(isset($_SESSION['USUARIO'])){
-                                if($_SESSION['ADM'] == 1){?>
-                                    <a class="nav-link" href="panel-de-control-usuario.php">PANEL DE CONTROL</a>
-                                <?php }}?>
+                            <a class="nav-link" href="#"></a>
                         </li>
                     </ul>
                     <?php if(!isset($_SESSION['USUARIO'])){ ?>
@@ -75,62 +74,118 @@ $row=mysqli_fetch_array($query);
         </nav>
     </div>
 
-    <div class="container-fluid mb-1 p-0" style="background-color:#121212">
-        <div class="container pt-5 pb-5">
-            <div class="row">
-                <div class="col-3">
+    <!-- MODAL -->
+    <div class="modal fade" id="carritomodal" tabindex="-1" aria-labelledby="carritomodal" aria-hidden="true" data-bs-theme="dark">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="carritomodal">Advertencia</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="col-6 text-center border border-5 bg-secondary-subtle" data-bs-theme="dark">
-                    <div class="row mb-4">
-                        <div class="col text-center">
-                            <h1>Mi Perfil</h1>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Usuario:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['USUARIO'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Correo:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['EMAIL'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Nombre:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['NOMBRE'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Género:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['GENERO'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>País de residencia:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['PAIS'];?></p>
-                        </div>
-                    </div>
+                <div class="modal-body">
+                    <?php
+                    if($valido != 1){
+                        if($error == ''){
+                            echo "<p>¿Estás seguro de querer agregar este juego a tu carrito?</p>";
+                        }
+                        if($error == 1){
+                            echo "<p class='text-alert'>Actualmente ya se encuentra este juego en su carrito!</p>";
+                        }
+                    }else{
+                        echo "<p class='text-alert'>Se ha guardado su juego en el carrito!</p>";
+                    }
+                    ?>
                 </div>
-                <div class="col-3">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <?php if($valido=='') {
+                        if(isset($_SESSION['USUARIO'])){
+                            if($error == ''){
+                                echo '<a href="conexion/añadir-al-carro.php?id='.$id.'" type="button" class="btn btn-light btn-lg">Añadir al carro</a>';
+                            }
+                        }else{
+                            echo '<a href="iniciar-sesion.php" type="button" class="btn btn-light btn-lg">Añadir al carro</a>';
+                        }
+                    }?>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="container-fluid mb-1 p-0" style="background-color:#121212">
+        <div class="container pt-5">
+            <div class="row pb-3">
+                <div class="col text-center">
+                    <h1><?php echo ucwords($row['NOMBRE']);?></h1>
+                </div>
+            </div>
+            <div class="row pb-4">
+                <div class="col d-flex justify-content-center">
+                    <div id="carouselGameImage" class="carousel slide w-75" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselGameImage" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselGameImage" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselGameImage" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            <button type="button" data-bs-target="#carouselGameImage" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="<?php echo $row['IMAGEN1'];?>" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="<?php echo $row['IMAGEN2'];?>" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="<?php echo $row['IMAGEN3'];?>" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="<?php echo $row['IMAGEN4'];?>" class="d-block w-100" alt="...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row py-4 rounded" style="background-color:#121212">
+                <div class="col-9 ps-4">
+                    <div>
+                        <a href="#" class="btn btn-outline-secondary btn-sm"><?php echo $row['ETIQUETA1'];?></a>
+                        <a href="#" class="btn btn-outline-secondary btn-sm"><?php echo $row['ETIQUETA2'];?></a>
+                        <a href="#" type="button" class="btn btn-outline-secondary btn-sm"><?php echo $row['ETIQUETA3'];?></a>
+                    </div>
+                    
+                    <h5 class="my-3">Descripción del juego</h5>
+                    <span>
+                        <?php echo nl2br($row['DESCRIPCION']);?>
+                    </span>
+                </div>
+                <div class="col-3">
+                    <div class="row mb-5">
+                        <div class="col">
+                            <div class="d-grid gap-4">
+                                <?php if ($row['OFERTA'] > 0){?>
+                                    <?php $precio_final= round($row['PRECIO'] * (1 - $row['OFERTA'] / 100)); ?>
+                                    <p class="m-0 text-center">Hay un descuento de <?php echo $row['OFERTA'];?>%!</p>
+                                    <a href=<?php if(isset($_SESSION['USUARIO'])){echo "compra-individual.php?id=$id";}else{echo "iniciar-sesion.php";}?> type="button" class="btn btn-light btn-lg">Comprar <span class="text-decoration-line-through"><?php echo $row['PRECIO'];?></span><span> <?php echo $precio_final;?> CLP</span></a>
+                                <?php }?>
+                                <?php if ($row['OFERTA'] == 0){?>
+                                    <a href=<?php if(isset($_SESSION['USUARIO'])){echo "compra-individual.php?id=$id";}else{echo "iniciar-sesion.php";}?> type="button" class="btn btn-light btn-lg">Comprar <span class=""><?php echo $row['PRECIO'];?> CLP</span></a>
+                                <?php }?>
+                                <button type="button" class="btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#carritomodal">Añadir al carro</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p class="m-0">Detalles del juego</p>
+                            <p class="m-0">Fecha de lanzamiento: <?php echo $row['FECHA'];?></p>
+                            <p class="m-0">Desarrollador: <?php echo $row['DESARROLLADOR'];?></p>
+                            <p class="m-0">Editor: <?php echo $row['EDITOR'];?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
     </div>
 
     <!-- Footer -->
@@ -199,7 +254,26 @@ $row=mysqli_fetch_array($query);
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var error = "<?php echo $error; ?>";
+            if (error) {
+                var errorModal = new bootstrap.Modal(document.getElementById('carritomodal'));
+                errorModal.show();
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var valido = "<?php echo $valido; ?>";
+            if (valido) {
+                var errorModal = new bootstrap.Modal(document.getElementById('carritomodal'));
+                errorModal.show();
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
 </html>

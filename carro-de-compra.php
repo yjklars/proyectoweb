@@ -2,6 +2,31 @@
 include("conexion/conexion.php"); 
 session_start();
 $con=conectar();
+
+$id_usuario=$_SESSION['IDUSUARIO'];
+
+$sql="SELECT IDJUEGO FROM carrito WHERE IDUSUARIO=$id_usuario";
+$query=mysqli_query($con,$sql);
+$resultado=mysqli_fetch_array($query);
+if($resultado){
+    if(!is_null($resultado[0])){
+        $resultados=explode(',',$resultado[0]);
+    }
+}
+
+
+
+$sql3="SELECT MAX(IDBOLETA) AS ULTIMO_ID FROM boleta";
+$query=mysqli_query($con,$sql3);
+if ($query){
+    $resultado2=mysqli_fetch_array($query);
+    if($resultado2['ULTIMO_ID'] > 0){
+        $ultimo_id=$resultado2['ULTIMO_ID'] + 1;
+    }
+    else{
+        $ultimo_id=1;
+    }    
+}
 ?>
 
 
@@ -29,13 +54,19 @@ $con=conectar();
                             <a class="nav-link" href="tienda.php">TIENDA</a> 
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="categorias.php">TODOS LOS JUEGOS</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="nosotros.php">ACERCA DE NOSOTROS</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="soporte.php">SOPORTE</a>
                         </li>
                         <li>
-                            <a class="nav-link" href="#"></a>
+                            <?php if(isset($_SESSION['USUARIO'])){
+                                if($_SESSION['ADM'] == 1){?>
+                                    <a class="nav-link" href="panel-de-control-usuario.php">PANEL DE CONTROL</a>
+                                <?php }}?>
                         </li>
                     </ul>
                     <?php if(!isset($_SESSION['USUARIO'])){ ?>
@@ -52,6 +83,7 @@ $con=conectar();
                         <a class="nav-link dropdown-toggle text-white-100 p-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $_SESSION['USUARIO'];?></a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="perfil-jugador.php">MI PERFIL</a></li>
+                            <li><a class="dropdown-item" href="carro-de-compra.php">MI CARRITO</a></li>
                             <li><a class="dropdown-item" href="conexion/logout.php">CERRAR SESION</a></li>
                         </ul>
                     </div>
@@ -63,49 +95,91 @@ $con=conectar();
 
     <div class="container-fluid mb-1 p-0" style="background-color:#121212">
         <div class="container pt-5">
+            <br><br>
             <div class="row">
                 <h1>Carro de compra</h1>
             </div>
             <div class="row">
                 <div class="col text-center" data-bs-theme="dark">
+                    <?php
+                        if (!is_null($resultado['IDJUEGO'])){?>
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">ID</th>
+                                <th scope="col">IDJUEGO</th>
                                 <th scope="col">Juego</th>
-                                <th scope="col">Oferta</th>
                                 <th scope="col">Precio</th>
+                                <th scope="col">Oferta</th>
                                 <th scope="col">Total</th>
+                                <th scope="col">Opcion</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Juego Ejemplo 1</td>
-                                <td>10%</td>
-                                <td>20000</td>
-                                <td>18000</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Juego Ejemplo 2</td>
-                                <td>50%</td>
-                                <td>10000</td>
-                                <td>5000</td>
-                            </tr>
+                            <?php
+                                $suma_total=0;
+                                for ($i=0; $i<count($resultados);$i++){
+                                    $val=$resultados[$i];
+                                    $sql="SELECT * FROM juego WHERE idjuego=$val";
+                                    $query1=mysqli_query($con,$sql);
+                                    $row=mysqli_fetch_array($query1);
+                                    $suma_total += round($row['PRECIO'] * (1-($row['OFERTA']/100)));?>
+                                    <tr>
+                                        <th scope="row"><?php echo $row['IDJUEGO'];?></th>
+                                        <td><?php echo $row['NOMBRE'];?></td>
+                                        <td><?php echo $row['PRECIO'];?></td>
+                                        <td><?php echo $row['OFERTA'];?></td>
+                                        <td><?php echo round($row['PRECIO'] * (1-($row['OFERTA']/100)));?></td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ModalEliminacion-<?php echo $row['IDJUEGO'];?>">Eliminar</button>
+                                            <div class="modal fade" id="ModalEliminacion-<?php echo $row['IDJUEGO'];?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">¿Está seguro que desea eliminar este juego del carrito?</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                            <a class="btn btn-danger" href="conexion/eliminar-juego-carrito.php?id=<?php echo $row['IDJUEGO']?>">Eliminar</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>                                    
+                                        </td>
+                                    </tr>
+                                <?php }?>
                         </tbody>
                     </table>
+                    <?php }else{?>
+                    <div>
+                        <p>No tiene añadido ningún juego al carrito de compras, para agregar juegos debe <a href="tienda.php">volver a la tienda</a>!</p>
+                    </div>
+                    <?php }?>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-4">
+            <form action="conexion/comprar-carrito.php" method="POST" novalidate data-bs-theme="dark">
+                <div class="row">
+                    <div class="col-4">
+                    </div>
+                    <?php if($resultado){
+                        if(!is_null($resultado['IDJUEGO'])){?>
+                    <div class="col-4 text-center">
+                        <h5>El precio total a pagar es de: <?php echo $suma_total;?> CLP</h5>
+                        <p>Seleccione el método de pago:<p>
+                        <select name="metodo_pago" class="form-select form-select-sm" aria-label="Default select example" required>
+                            <option value="Débito">Débito</option>
+                            <option value="Crédito">Crédito</option>
+                        </select>
+                        <input type="number" name="total" value="<?php echo $suma_total;?>" hidden>
+                        <input type="text" name="ultimo_id" value="<?php echo $ultimo_id;?>" hidden>
+                        <button type="submit" class="mt-3 btn btn-light btn-lg">Comprar</button>
+                    </div>
+                    <?php }}?>
+                    <div class="col-4">
+                    </div>
+                    <br><br><br><br>
                 </div>
-                <div class="col-4 text-center">
-                    <a class="btn btn-light btn-lg">Comprar</a>
-                </div>
-                <div class="col-4">
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 
@@ -176,7 +250,31 @@ $con=conectar();
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+            }, false)
+        })
+        })()
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     
 </body>
 </html>

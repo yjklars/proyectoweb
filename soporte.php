@@ -2,6 +2,11 @@
 include("conexion/conexion.php"); 
 session_start();
 $con=conectar();
+$val=isset($_GET['val'])?$_GET['val'] : '';
+
+if($val == 1){
+    $text_val="Se ha registrado exitosamente su mensaje!";
+}
 ?>
 
 
@@ -29,13 +34,19 @@ $con=conectar();
                             <a class="nav-link" href="tienda.php">TIENDA</a> 
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="categorias.php">TODOS LOS JUEGOS</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="nosotros.php">ACERCA DE NOSOTROS</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#">SOPORTE</a>
                         </li>
                         <li>
-                            <a class="nav-link" href="#"></a>
+                            <?php if(isset($_SESSION['USUARIO'])){
+                                if($_SESSION['ADM'] == 1){?>
+                                    <a class="nav-link" href="panel-de-control-usuario.php">PANEL DE CONTROL</a>
+                            <?php }}?>
                         </li>
                     </ul>
                     <?php if(!isset($_SESSION['USUARIO'])){ ?>
@@ -52,6 +63,7 @@ $con=conectar();
                         <a class="nav-link dropdown-toggle text-white-100 p-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $_SESSION['USUARIO'];?></a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="perfil-jugador.php">MI PERFIL</a></li>
+                            <li><a class="dropdown-item" href="carro-de-compra.php">MI CARRITO</a></li>
                             <li><a class="dropdown-item" href="conexion/logout.php">CERRAR SESION</a></li>
                         </ul>
                     </div>
@@ -171,54 +183,24 @@ $con=conectar();
                 </div>
             </div>
         </div>
-
-        <!-- Modificar con php la visualización de este apartado: 
-        1) Si se tiene una sesion inciada: te permitirá hacer preguntas especificas para cada videojuego.
-        2) Si no se tiene una sesion iniciada: te aconsejará iniciar sesión para poder realizar una pregunta específica.
-        -->
-        <div class="container pt-5 pb-4">
-            <div class="row pb-5">
-                <div class="col-6">
-                    <h1>Soporte específico por videojuego</h1>
-                </div>
-            </div>
-            <!-- Con php automatizar el elemento 'select' de Bootstrap para que reconozca los juegos en la base de datos
-            De esta manera poder actualizar este elemento a medida que se inserten o eliminen juegos.
-            -->
-            <form class="needs-validation" novalidate data-bs-theme="dark">
-                <div class="row justify-content-center">
-                    <div class="col-6">
-                        <label for="seleccion1" class="form-label">Seleccione el juego de la siguiente lista desplegable</label>
-                        <select id="seleccion1" class="form-select" name="seleccion1" required>
-                            <option selected disabled value="">Seleccione el juego</option>
-                            <option value="#">Juego 1</option>
-                            <option value="#">Juego 2</option>
-                            <option value="#">Juego 3</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row mt-2 justify-content-center">
-                    <div class="col-6">
-                        <label for="asuntoJuego" class="form-label">Describa brevemente su problema</label>
-                        <input id="asuntoJuego" class="form-control" name="asuntoJuego" placeholder="Asunto del problema" required>
-                    </div>
-                </div>
-                <div class="row mt-2 justify-content-center">
-                    <div class="col-6">
-                        <label for="mensajeSoporte" class="form-label">Describa detalladamente su problema:</label>
-                        <textarea type="text-area" class="form-control" id="mensajeSoporte" name="mensajeSoporte" placeholder="Mencionar juego, y situación específica, fecha, etc." rows="3" required></textarea>
-                    </div>
-                </div>
-                <div class="row mt-2 justify-content-center">
-                    <div class="col-6 text-center">
-                        <button type="submit" class="btn btn-secondary">Enviar</button>
-                    </div>
-                </div>
-            </form>
-        </div>
     </div>
 
-
+    <div class="modal fade" id="valModal" tabindex="-1" aria-labelledby="valModalLabel" aria-hidden="true" data-bs-theme="dark">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="valModalLabel">Error</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <?php echo $text_val; ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Footer -->
     <div class="container-fluid pt-5 pb-4">
         <div class="container">
@@ -307,7 +289,15 @@ $con=conectar();
         })
         })()
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var val = "<?php echo $val; ?>";
+            if (val) {
+                var errorModal = new bootstrap.Modal(document.getElementById('valModal'));
+                errorModal.show();
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </html>

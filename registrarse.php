@@ -32,6 +32,9 @@ else{
                             <a class="nav-link" href="tienda.php">TIENDA</a> 
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="categorias.php">TODOS LOS JUEGOS</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="nosotros.php">ACERCA DE NOSOTROS</a>
                         </li>
                         <li class="nav-item">
@@ -380,7 +383,7 @@ else{
                     <?php echo $text_error; ?>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</a>
                 </div>
             </div>
         </div>

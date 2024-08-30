@@ -2,14 +2,21 @@
 include("conexion/conexion.php"); 
 session_start();
 $con=conectar();
-
 $id_usuario=$_SESSION['IDUSUARIO'];
 
-$sql="SELECT * FROM usuario WHERE idusuario='$id_usuario'";
-$query=mysqli_query($con,$sql);
-$row=mysqli_fetch_array($query);
+if(isset($_POST['nombre'])){
+    $nombre=$_POST['nombre'];
+    $sql="SELECT * FROM juego WHERE nombre LIKE '$nombre%'";
+    $query=mysqli_query($con,$sql);
+
+}else{
+    $sql="SELECT * FROM juego";
+    $query=mysqli_query($con,$sql);
+
+}
 
 ?>
+
 
 
 <!DOCTYPE html>
@@ -18,9 +25,12 @@ $row=mysqli_fetch_array($query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ancient</title>
+
     <link rel="stylesheet" href="Bootstrap/styles.css">
     <link rel="stylesheet" href="Bootstrap/stylesPersonalizados.css">
+    
 </head>
+<!-- cuerpo: bg-dark -->
 <body class="text-light" style="background-color:#18181C">
     <div class="container">
         <nav class="navbar navbar-dark navbar-expand-lg body-tertiary p-4">
@@ -36,7 +46,7 @@ $row=mysqli_fetch_array($query);
                             <a class="nav-link" href="tienda.php">TIENDA</a> 
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="categorias.php">TODOS LOS JUEGOS</a>
+                            <a class="nav-link active" href="#">TODOS LOS JUEGOS</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="nosotros.php">ACERCA DE NOSOTROS</a>
@@ -44,11 +54,14 @@ $row=mysqli_fetch_array($query);
                         <li class="nav-item">
                             <a class="nav-link" href="soporte.php">SOPORTE</a>
                         </li>
-                        <li>
+                        <li class="nav-item">
                             <?php if(isset($_SESSION['USUARIO'])){
                                 if($_SESSION['ADM'] == 1){?>
-                                    <a class="nav-link" href="panel-de-control-usuario.php">PANEL DE CONTROL</a>
+                                    <a class="nav-link" href="panel-de-control-usuario.php" >PANEL DE CONTROL</a>
                                 <?php }}?>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#"></a>
                         </li>
                     </ul>
                     <?php if(!isset($_SESSION['USUARIO'])){ ?>
@@ -76,62 +89,49 @@ $row=mysqli_fetch_array($query);
     </div>
 
     <div class="container-fluid mb-1 p-0" style="background-color:#121212">
-        <div class="container pt-5 pb-5">
-            <div class="row">
-                <div class="col-3">
-                </div>
-                <div class="col-6 text-center border border-5 bg-secondary-subtle" data-bs-theme="dark">
-                    <div class="row mb-4">
-                        <div class="col text-center">
-                            <h1>Mi Perfil</h1>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Usuario:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['USUARIO'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Correo:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['EMAIL'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Nombre:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['NOMBRE'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Género:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['GENERO'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>País de residencia:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['PAIS'];?></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3">
+        
+        <div class="container pt-5">
+            <h5 class="pb-2 text-center">Disfrute el catálogo de juegos!</h5>
+            
+            <div class="container text-center">
+                <div class="row pb-4 pt-4">
+                    
+                    <div class="col-3"></div>
+                    <form class="col-6" action="categorias.php" method="POST" data-bs-theme="dark">
+                        <input class="form-control form-control-sm" type="text" name="nombre" placeholder="Buscar por nombre">
+                        <a class="btn btn-dark my-2" href="categorias.php">Reset</a>
+                        <button class="btn btn-secondary my-2" type="submit">Buscar</button>                    
+                    </form>
+                    <div class="col-3"></div>
                 </div>
             </div>
+
+            <?php 
+            while($resultado=mysqli_fetch_array($query)){
+            ?>
+                <div class="row text-center pb-3">
+                    <div class="col-3">
+                    </div>
+                    <a class="col-6 py-2 text-center bg-dark border border-black link-underline link-underline-opacity-0" href="juego.php?id=<?php echo $resultado['IDJUEGO'];?>">
+                        
+                            <span class="pe-4"><?php echo ucwords($resultado['NOMBRE']);?></span>
+                            <span class="pe-4">Precio Original: <?php echo ucwords($resultado['PRECIO']);?> CLP</span>
+                            <span>Oferta: <?php echo ucwords($resultado['OFERTA']);?>%</span>
+                        
+                    </a>
+                    <div class="col-3">
+                    </div>
+                </div>
+            <?php }?>
         </div>
+        <br><br><br>
     </div>
+
+    
+
+
+
+
 
     <!-- Footer -->
     <div class="container-fluid pt-5 pb-4">
@@ -200,6 +200,5 @@ $row=mysqli_fetch_array($query);
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
 </body>
 </html>

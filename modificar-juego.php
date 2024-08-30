@@ -4,6 +4,11 @@ session_start();
 $con=conectar();
 $error=isset($_GET['error'])?$_GET['error'] : '';
 
+$id=$_GET['id'];
+$sql="SELECT * FROM juego WHERE IDJUEGO=$id";
+$query=mysqli_query($con,$sql);
+$row=mysqli_fetch_array($query);
+
 if($error == 1){
     $error="Este juego ya se encuentra registrado en la página!";
 }elseif($error == 2){
@@ -110,11 +115,11 @@ if($error == 1){
         </div>
 
 
-
         <div class="container pt-5 text-light" style="background-color:#121212">
-            <form action="conexion/insertar_juego.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate data-bs-theme="dark">
+            <form action="conexion/update-juego.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate data-bs-theme="dark">
                 <div class="row pb-5">
                     <div class="col text-center">
+                        <input type="text" name="id" value="<?php echo $id;?>" hidden>
                         <h1>Formulario para ingresar juegos a la tienda</h1>
                     </div>
                 </div>
@@ -126,51 +131,51 @@ if($error == 1){
                 <div class="row pb-3">
                     <div class="col-6">
                         <label for="titulo" class="form-label"><p>Ingrese el título del juego:</p></label>
-                        <input id="titulo" name="nombre" class="form-control form-control-sm" type="text" placeholder="Ingrese un título para el juego:" required>
+                        <input id="titulo" name="nombre" class="form-control form-control-sm" type="text" value="<?php echo $row['NOMBRE'];?>" required>
                     </div>
                     <div class="col-1"></div>
                     <div class="col-5">
                         <label for="et1" class="form-label"><p>Ingrese etiqueta 1:</p></label>
-                        <input id="et1" name="etiqueta1" class="form-control form-control-sm" type="text" placeholder="Ingrese una etiqueta para su juego:" required>
+                        <input id="et1" name="etiqueta1" class="form-control form-control-sm" type="text" value="<?php echo $row['ETIQUETA1'];?>" required>
                     </div>
                 </div>
                 <div class="row pb-3">
                     <div class="col-6">
                         <label for="im1" class="form-label"><p>Ingrese la url de la imagen 1 para el slider:</p></label>
-                        <input id="im1" name="imagen1" class="form-control form-control-sm" type="text" required>
+                        <input id="im1" name="imagen1" class="form-control form-control-sm" type="text" value="<?php echo $row['IMAGEN1'];?>" required>
                     </div>
                     <div class="col-1"></div>
                     <div class="col-5">
                         <label for="et2" class="form-label"><p>Ingrese etiqueta 2:</p></label>
-                        <input id="et2" name="etiqueta2" class="form-control form-control-sm" type="text" placeholder="Ingrese una etiqueta para su juego:" required>
+                        <input id="et2" name="etiqueta2" class="form-control form-control-sm" type="text" value="<?php echo $row['ETIQUETA2'];?>" required>
                     </div>
                 </div>
                 <div class="row pb-3">
                     <div class="col-6">
                         <label for="im2" class="form-label"><p>Ingrese la url de la imagen 2 para el slider:</p></label>
-                        <input id="im2" name="imagen2" class="form-control form-control-sm" type="text" required>
+                        <input id="im2" name="imagen2" class="form-control form-control-sm" type="text" value="<?php echo $row['IMAGEN2'];?>" required>
                     </div>
                     <div class="col-1"></div>
                     <div class="col-5">
                         <label for="et3" class="form-label"><p>Ingrese etiqueta 3:</p></label>
-                        <input id="et3" name="etiqueta3" class="form-control form-control-sm" type="text" placeholder="Ingrese una etiqueta para su juego:" required>
+                        <input id="et3" name="etiqueta3" class="form-control form-control-sm" type="text" value="<?php echo $row['ETIQUETA3'];?>" required>
                     </div>
                 </div>
                 <div class="row pb-3">
                     <div class="col-6">
                         <label for="im3" class="form-label"><p>Ingrese la url de la imagen 3 para el slider:</p></label>
-                        <input id="im3" name="imagen3" class="form-control form-control-sm"  type="text" required>
+                        <input id="im3" name="imagen3" class="form-control form-control-sm"  type="text" value="<?php echo $row['IMAGEN3'];?>" required>
                     </div>
                     <div class="col-1"></div>
                     <div class="col-5">
                         <label for="et4" class="form-label"><p>Ingrese etiqueta 4:</p></label>
-                        <input id="et4" name="etiqueta4" class="form-control form-control-sm" type="text" placeholder="Ingrese una etiqueta para su juego:" required>
+                        <input id="et4" name="etiqueta4" class="form-control form-control-sm" type="text" value="<?php echo $row['ETIQUETA4'];?>" required>
                     </div>
                 </div>
                 <div class="row pb-5">
                     <div class="col-6">
                         <label for="im4" class="form-label"><p>Ingrese la url de la imagen 4 para el slider:</p></label>
-                        <input id="im4" name="imagen4" class="form-control form-control-sm" type="text" required>
+                        <input id="im4" name="imagen4" class="form-control form-control-sm" type="text" value="<?php echo $row['IMAGEN4'];?>" required>
                     </div>
                     <div class="col-1"></div>
                     <div class="col-5"></div>
@@ -181,15 +186,15 @@ if($error == 1){
                 <div class="row pb-5">
                     <div class="col">
                         <label for="fec" class="form-label"><p>Ingrese la fecha de lanzamiento del juego:</p></label>
-                        <input id="fec" name="fecha" class="form-control form-control-sm" type="date" required>
+                        <input id="fec" name="fecha" class="form-control form-control-sm" type="date" value="<?php echo $row['FECHA'];?>" required>
                     </div>
                     <div class="col">
                         <label for="desa" class="form-label"><p>Ingrese la desarrolladora del juego:</p></label>
-                        <input id="desa" name="desarrollador" class="form-control form-control-sm" type="text" required>
+                        <input id="desa" name="desarrollador" class="form-control form-control-sm" type="text" value="<?php echo $row['DESARROLLADOR'];?>" required>
                     </div>
                     <div class="col">
                         <label for="edit" class="form-label"><p>Ingrese la editora del juego:</p></label>
-                        <input id="edit" name="editor" class="form-control form-control-sm" type="text" required>
+                        <input id="edit" name="editor" class="form-control form-control-sm" type="text" value="<?php echo $row['EDITOR'];?>" required>
                     </div>
                 </div>
                 <div class="row pb-3">
@@ -197,25 +202,26 @@ if($error == 1){
                 </div>
                 <div class="row pb-5">
                     <div class="col">
-                        <textarea name="descripcion" class="form-control form-control-sm" placeholder="Escribe una breve descripción para tu juego" style="height: 400px" required></textarea>
+                        <textarea name="descripcion" class="form-control form-control-sm" style="height: 400px" required><?php echo $row['DESCRIPCION'];?></textarea>
                     </div>
                 </div>
 
                 <div class="row pb-5">
                     <div class="col-6">
                         <label for="prec" class="form-label"><p>Ingrese el precio del juego (recuerde que el precio debe ir desde 0 a 500000):</p></label>
-                        <input id="prec" name="precio" class="form-control form-control-sm"  type="number" placeholder="Ingrese un precio:" required>
+                        <input id="prec" name="precio" class="form-control form-control-sm"  type="number" value="<?php echo $row['PRECIO'];?>" required>
                     </div>
                     <div class="col-1"></div>
                     <div class="col-5">
                         <label for="ofer" class="form-label"><p>Ingrese la oferta del juego (recuerde que la oferta debe ir desde 0 a 100):</p></label>
-                        <input id="ofer" name="oferta" class="form-control form-control-sm"  type="number" placeholder="Ingrese una oferta:" required>
+                        <input id="ofer" name="oferta" class="form-control form-control-sm"  type="number" value="<?php echo $row['OFERTA'];?>" required>
                     </div>
                 </div>
 
                 <div class="row pb-5">
                     <div class="col text-center">
-                        <button type="submit" class="btn btn-success"><strong>Registrar juego</strong></button>
+                        <a href="panel-de-control-juego.php" class="btn btn-danger me-3">Cancelar</a>
+                        <button type="submit" class="btn btn-success">Modificar</button>
                     </div>
                 </div>
             </form>

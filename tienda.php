@@ -33,10 +33,19 @@ $con=conectar();
                             <a class="nav-link active" href="#">TIENDA</a> 
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="nosotros.php">ACERCA DE NOSOTROS</a>
+                            <a class="nav-link" href="categorias.php">TODOS LOS JUEGOS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="categorias.php">ACERCA DE NOSOTROS</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="soporte.php">SOPORTE</a>
+                        </li>
+                        <li class="nav-item">
+                            <?php if(isset($_SESSION['USUARIO'])){
+                                if($_SESSION['ADM'] == 1){?>
+                                    <a class="nav-link" href="panel-de-control-usuario.php">PANEL DE CONTROL</a>
+                                <?php }}?>
                         </li>
                         <li>
                             <a class="nav-link" href="#"></a>
@@ -56,6 +65,7 @@ $con=conectar();
                         <a class="nav-link dropdown-toggle text-white-100 p-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $_SESSION['USUARIO'];?></a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="perfil-jugador.php">MI PERFIL</a></li>
+                            <li><a class="dropdown-item" href="carro-de-compra.php">MI CARRITO</a></li>
                             <li><a class="dropdown-item" href="conexion/logout.php">CERRAR SESION</a></li>
                         </ul>
                     </div>
@@ -69,7 +79,7 @@ $con=conectar();
         <div class="container-fluid pb-5">
             <div class="row">
                 <div class="col-md-4 bannerContainer bg-black">
-                    <a href="..."><img class="d-block w-100 m-0 p-0 bannerImage" src="Images/elden-ring-banner.png" alt="Elden Ring DLC"></a>
+                    <a href="juego.php?id=8"><img class="d-block w-100 m-0 p-0 bannerImage" src="Images/elden-ring-banner.png" alt="Elden Ring DLC"></a>
                 </div>
             </div>
         </div>
@@ -81,46 +91,62 @@ $con=conectar();
             <div class="container">
                 <div class="row">
                     <div class="col-3">
-                        <img src="Images/farcry-6-container-2.jpg" class="img-fluid">
-                        <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">80%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 45.000</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 9.000</span>
+                        <a href="juego.php?id=3" class="link-light link-underline-dark link-underline-opacity-0">
+                            <img src="Images/farcry-6-container-2.jpg" class="img-fluid">
+                            <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">80%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 45.000</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 9.000</span>
+                        </a>
                     </div>
                     <div class="col-3">
-                        <a href="pagina-juego.php" class="link-light link-underline-dark link-underline-opacity-0">
+                        <a href="juego.php?id=2" class="link-light link-underline-dark link-underline-opacity-0">
                             <img src="Images/re-4-remake-container-2.jpg" class="img-fluid">
                             <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">35%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 35.750</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 23.238</span>
-                        </a>                    
+                        </a>
                     </div>
                     <div class="col-3">
-                        <img src="Images/fallout-76-container-2.jpg" class="img-fluid">
-                        <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">70%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 26.499</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 7.950</span>
-                    </div>
+                        <a href="juego.php?id=4" class="link-light link-underline-dark link-underline-opacity-0">
+                            <img src="Images/fallout-76-container-2.jpg" class="img-fluid">
+                            <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">70%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 26.499</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 7.950</span>
+                        </a>
+                        </div>
                     <div class="col-3">
-                        <img src="Images/stanley-parable-container-2.jpg" class="img-fluid">
-                        <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">50%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 9.500</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 4.750</span>
+                        <a href="juego.php?id=5" class="link-light link-underline-dark link-underline-opacity-0">
+                            <img src="Images/stanley-parable-container-2.jpg" class="img-fluid">
+                            <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">50%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 9.500</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 4.750</span>
+                        </a>
                     </div>
                 </div>
                 <div class="row my-3">
                     <div class="col-4">
-                        <img src="Images/outer-wilds-container-2.jpg" class="img-fluid">
-                        <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">40%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 12.500</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 7.500</span>
+                        <a href="juego.php?id=6" class="link-light link-underline-dark link-underline-opacity-0">
+                            <img src="Images/outer-wilds-container-2.jpg" class="img-fluid">
+                            <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">40%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 12.500</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 7.500</span>
+                        </a>
                     </div>
                     <div class="col-4">
+                        <a href="juego.php?id=7" class="link-light link-underline-dark link-underline-opacity-0">
                         <img src="Images/assassin-valhalla-container-2.jpg" class="img-fluid">
                         <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">80%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 44.900</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 8.980</span>
+                        </a>
                     </div>
-                    <div class="col-4">
-                        <img src="Images/witcher-3-container-2.jpg" class="img-fluid">
-                        <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">90%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 18.300</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 1.830</span>
+                    <div class="col-4">]
+                        <a href="juego.php?id=9" class="link-light link-underline-dark link-underline-opacity-0">
+                            <img src="Images/witcher-3-container-2.jpg" class="img-fluid">
+                            <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">90%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 18.300</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 1.830</span>
+                        </a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-3">
-                        <img src="Images/sekiro-container-2.jpg" class="img-fluid">
-                        <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">50%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 47.650</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 23.825</span>
+                        <a href="juego.php?id=10" class="link-light link-underline-dark link-underline-opacity-0">
+                            <img src="Images/sekiro-container-2.jpg" class="img-fluid">
+                            <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">50%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 47.650</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 23.825</span>
+                        </a>
                     </div>
                     <div class="col-3">
-                        <img src="Images/gta-5-container-2.jpg" class="img-fluid">
-                        <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">65%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 29.900</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 10.465</span>
+                        <a href="juego.php?id=11" class="link-light link-underline-dark link-underline-opacity-0">                        
+                            <img src="Images/gta-5-container-2.jpg" class="img-fluid">
+                            <span class="fs-5 ps-2 pb-1 pe-1 bg-warning text-dark text-center border border-black">65%</span><span class="fs-5 ps-1 pb-1 text-warning-emphasis text-decoration-line-through bg-dark border border-black border-start-0 border-end-0">CLP$ 29.900</span><span class="fs-5 pb-1 pe-1 ps-1 bg-dark border border-black border-start-0">CLP$ 10.465</span>
+                        </a>
                     </div>
                     <div class="col-3">
                         <img src="Images/stardew-valley-container-2.jpg" class="img-fluid">

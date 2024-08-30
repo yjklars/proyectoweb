@@ -5,11 +5,11 @@ $con=conectar();
 
 $id_usuario=$_SESSION['IDUSUARIO'];
 
-$sql="SELECT * FROM usuario WHERE idusuario='$id_usuario'";
+$sql="SELECT * FROM boleta";
 $query=mysqli_query($con,$sql);
-$row=mysqli_fetch_array($query);
 
 ?>
+
 
 
 <!DOCTYPE html>
@@ -18,9 +18,12 @@ $row=mysqli_fetch_array($query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ancient</title>
+
     <link rel="stylesheet" href="Bootstrap/styles.css">
     <link rel="stylesheet" href="Bootstrap/stylesPersonalizados.css">
+    
 </head>
+<!-- cuerpo: bg-dark -->
 <body class="text-light" style="background-color:#18181C">
     <div class="container">
         <nav class="navbar navbar-dark navbar-expand-lg body-tertiary p-4">
@@ -44,11 +47,14 @@ $row=mysqli_fetch_array($query);
                         <li class="nav-item">
                             <a class="nav-link" href="soporte.php">SOPORTE</a>
                         </li>
-                        <li>
+                        <li class="nav-item">
                             <?php if(isset($_SESSION['USUARIO'])){
                                 if($_SESSION['ADM'] == 1){?>
-                                    <a class="nav-link" href="panel-de-control-usuario.php">PANEL DE CONTROL</a>
+                                    <a class="nav-link active" href="#" >PANEL DE CONTROL</a>
                                 <?php }}?>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#"></a>
                         </li>
                     </ul>
                     <?php if(!isset($_SESSION['USUARIO'])){ ?>
@@ -76,62 +82,69 @@ $row=mysqli_fetch_array($query);
     </div>
 
     <div class="container-fluid mb-1 p-0" style="background-color:#121212">
-        <div class="container pt-5 pb-5">
+        <div class="container" style="background-color:#121212">
+            <nav class="navbar navbar-dark navbar-expand-lg p-4">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar2" aria-controls="navbar2" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbar2">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="panel-de-control-usuario.php">USUARIOS</a> 
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="panel-de-control-juego.php">JUEGOS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">BOLETAS</a>
+                            </li>
+                            
+                            <li>
+                                <a class="nav-link" href="panel-de-control-contacto.php">CONTACTO</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div> 
+            </nav>
+        </div>
+        <div class="container">
+            <h5>Tabla de registros de boletas de la tienda Ancient:</h5>
             <div class="row">
-                <div class="col-3">
-                </div>
-                <div class="col-6 text-center border border-5 bg-secondary-subtle" data-bs-theme="dark">
-                    <div class="row mb-4">
-                        <div class="col text-center">
-                            <h1>Mi Perfil</h1>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Usuario:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['USUARIO'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Correo:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['EMAIL'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Nombre:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['NOMBRE'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Género:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['GENERO'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>País de residencia:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['PAIS'];?></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3">
+                <div class="col">
+                    <table class="table" data-bs-theme="dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">IDBoleta</th>
+                                <th scope="col">IDUsuario</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Metodo de Pago</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            while($resultado=mysqli_fetch_array($query)){
+                            ?>
+                            <tr>
+                                <th><?php echo $resultado['IDBOLETA'];?></th>
+                                <th><?php echo $resultado['IDUSUARIO'];?></th>
+                                <th><?php echo $resultado['TOTAL'];?></th>
+                                <th><?php echo $resultado['METODO_PAGO'];?></th>
+                            </tr>
+                            <?php }?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+        <br><br><br><br>
     </div>
+
+    
+
+
+
+
 
     <!-- Footer -->
     <div class="container-fluid pt-5 pb-4">
@@ -200,6 +213,5 @@ $row=mysqli_fetch_array($query);
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
 </body>
 </html>

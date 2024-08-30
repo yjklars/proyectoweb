@@ -2,7 +2,14 @@
 include("conexion/conexion.php"); 
 session_start();
 $con=conectar();
+
+$id_usuario=$_SESSION['IDUSUARIO'];
+
+$sql="SELECT * FROM contacto";
+$query=mysqli_query($con,$sql);
+
 ?>
+
 
 
 <!DOCTYPE html>
@@ -11,9 +18,12 @@ $con=conectar();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ancient</title>
+
     <link rel="stylesheet" href="Bootstrap/styles.css">
     <link rel="stylesheet" href="Bootstrap/stylesPersonalizados.css">
+    
 </head>
+<!-- cuerpo: bg-dark -->
 <body class="text-light" style="background-color:#18181C">
     <div class="container">
         <nav class="navbar navbar-dark navbar-expand-lg body-tertiary p-4">
@@ -29,10 +39,19 @@ $con=conectar();
                             <a class="nav-link" href="tienda.php">TIENDA</a> 
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="categorias.php">TODOS LOS JUEGOS</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="nosotros.php">ACERCA DE NOSOTROS</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="soporte.php">SOPORTE</a>
+                        </li>
+                        <li class="nav-item">
+                            <?php if(isset($_SESSION['USUARIO'])){
+                                if($_SESSION['ADM'] == 1){?>
+                                    <a class="nav-link active" href="#" >PANEL DE CONTROL</a>
+                                <?php }}?>
                         </li>
                         <li>
                             <a class="nav-link" href="#"></a>
@@ -52,6 +71,7 @@ $con=conectar();
                         <a class="nav-link dropdown-toggle text-white-100 p-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $_SESSION['USUARIO'];?></a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="perfil-jugador.php">MI PERFIL</a></li>
+                            <li><a class="dropdown-item" href="carro-de-compra.php">MI CARRITO</a></li>
                             <li><a class="dropdown-item" href="conexion/logout.php">CERRAR SESION</a></li>
                         </ul>
                     </div>
@@ -62,83 +82,113 @@ $con=conectar();
     </div>
 
     <div class="container-fluid mb-1 p-0" style="background-color:#121212">
-        <div class="container pt-5">
-            <div class="row pb-3">
-                <div class="col text-center">
-                    <h1>Resident Evil 4</h1>
-                </div>
-            </div>
-            <div class="row pb-4">
-                <div class="col d-flex justify-content-center">
-                    <div id="carouselGameImage" class="carousel slide w-75" data-bs-ride="carousel">
-                        <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#carouselGameImage" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#carouselGameImage" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#carouselGameImage" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                            <button type="button" data-bs-target="#carouselGameImage" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                        </div>
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <img src="https://i.postimg.cc/bYMhyNfV/slide1.jpg" class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2050650/ss_59d1b19964cc532213df92c8287b75a0bffeb33c.1920x1080.jpg?t=1707455805" class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2050650/ss_69810f4cd155912fdfdd21da70181df7d454c874.jpg?t=1707455805" class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2050650/ss_72888d13c9e3995f05a2886a51f0dc8791e28afa.jpg?t=1707455805" class="d-block w-100" alt="...">
-                            </div>
-                        </div>
+        <div class="container" style="background-color:#121212">
+            <nav class="navbar navbar-dark navbar-expand-lg p-4">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar2" aria-controls="navbar2" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbar2">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="panel-de-control-usuario.php">USUARIOS</a> 
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="panel-de-control-juego.php">JUEGOS</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="panel-de-control-boleta.php">BOLETAS</a>
+                            </li>
+                            
+                            <li>
+                                <a class="nav-link active" href="#">CONTACTO</a>
+                            </li>
+                        </ul>
                     </div>
-                </div>
-            </div>
-            <div class="row py-4 rounded" style="background-color:#121212">
-                <div class="col-9 ps-4">
-                    <div>
-                        <a href="#" class="btn btn-outline-secondary btn-sm">Terror</a>
-                        <a href="#" class="btn btn-outline-secondary btn-sm">Acción</a>
-                        <a href="#" type="button" class="btn btn-outline-secondary btn-sm">Un jugador</a>
-                    </div>
-                    
-                    <h5 class="my-3">Descripción</h5>
-                    <span>
-                        La pesadilla renace en esta reimaginación moderna de uno de los capítulos más icónicos de la saga Resident Evil.<br><br>Resident Evil 4 Remake te invita a vivir de nuevo la experiencia que redefinió el género de survival horror, ahora con gráficos impresionantes, jugabilidad mejorada y una narrativa más profunda.
-
-                        Seis años después del desastre biológico de Raccoon City, el agente especial del gobierno, Leon S. Kennedy, es enviado a una remota aldea en Europa para rescatar a Ashley Graham, la hija del presidente de los Estados Unidos.<br><br>Lo que parecía ser una misión de rescate de rutina pronto se convierte en una lucha desesperada por sobrevivir, cuando Leon se enfrenta a un pueblo plagado de enemigos retorcidos y controlados por un parásito letal conocido como Las Plagas. Cada paso que das te adentra más en un oscuro y peligroso mundo donde el horror acecha en cada esquina.
-
-                        <br><br>El remake utiliza el motor RE Engine para ofrecer una atmósfera visualmente deslumbrante y más envolvente que nunca. Los gráficos de última generación dan vida a cada detalle del juego, desde los enemigos deformes hasta los oscuros entornos rurales.<br><br>Además, la jugabilidad ha sido renovada para ser más fluida y dinámica, sin perder la sensación de vulnerabilidad que define la experiencia de Resident Evil. Enfrentarás a los icónicos Ganados, quienes han sido rediseñados con una inteligencia artificial mejorada, haciendo que cada enfrentamiento sea más intenso y aterrador.
-
-                        <br><br>La narrativa ha sido expandida y enriquecida, brindando una nueva perspectiva sobre la historia y los personajes, revelando secretos ocultos que añaden más profundidad al mundo de Resident Evil. Mientras avanzas, deberás administrar cuidadosamente tus recursos y tomar decisiones estratégicas para sobrevivir. Cada bala cuenta, cada recurso es crucial, y cada error puede ser fatal.
-
-                        <br><br>Además de la campaña principal, el juego ofrece modos adicionales como el desafiante Mercenarios, donde tus habilidades serán puestas a prueba en combates contra oleadas de enemigos. Con niveles de dificultad ajustables, Resident Evil 4 Remake se adapta tanto a veteranos de la saga como a nuevos jugadores, garantizando una experiencia inolvidable para todos.
-
-                        <br><br>Resident Evil 4 Remake es más que una simple recreación; es una reinvención que ofrece tanto nostalgia como una emocionante novedad, entregando una dosis de terror moderno mientras honra al clásico. ¿Estás listo para enfrentar el horror y cumplir tu misión? La oscuridad te espera.
-                    </span>
-                </div>
-                <div class="col-3">
-                    <div class="row mb-5">
-                        <div class="col">
-                            <div class="d-grid gap-4">
-                                <button type="button" class="btn btn-light btn-lg">Comprar</button>
-                                <button type="button" class="btn btn-light btn-lg">Añadir al carro</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <p class="m-0">Detalles del juego</p>
-                            <p class="m-0">Fecha de lanzamiento:</p>
-                            <p class="m-0">Desarrollador:</p>
-                            <p class="m-0">Editor:</p>
-                        </div>
-                    </div>
+                </div> 
+            </nav>
+        </div>
+        <div class="container">
+            <h5>Tabla de registros de contactos de la tienda Ancient:</h5>
+            <div class="row">
+                <div class="col">
+                    <table class="table" data-bs-theme="dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">IDContacto</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Asunto</th>
+                                <th scope="col">Mensaje</th>
+                                <th scope="col">Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            while($resultado=mysqli_fetch_array($query)){
+                            ?>
+                            <tr>
+                                <th><?php echo $resultado['IDCONTACTO'];?></th>
+                                <th><?php echo $resultado['EMAIL'];?></th>
+                                <th><?php echo $resultado['ASUNTO'];?></th>
+                                <th><?php echo $resultado['MENSAJE'];?></th>
+                                <th>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ModalEliminacion-<?php echo $resultado['IDCONTACTO'];?>">
+                                        Eliminar
+                                    </button>
+                                    <div class="modal fade" id="ModalEliminacion-<?php echo $resultado['IDCONTACTO'];?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">¿Está seguro que desea eliminar el usuario seleccionado?</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <a class="btn btn-danger" href="conexion/eliminar-contacto.php?id=<?php echo $resultado['IDCONTACTO'];?>">Eliminar</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#ModalLeer-<?php echo $resultado['IDCONTACTO'];?>">
+                                        Leer
+                                    </button>
+                                    <div class="modal fade" id="ModalLeer-<?php echo $resultado['IDCONTACTO'];?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Contacto</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h5>Email:</h5>
+                                                    <p><?php echo $resultado['EMAIL'];?></p>
+                                                    <h5>Asunto:</h5>
+                                                    <p><?php echo $resultado['ASUNTO'];?></p>
+                                                    <h5>Mensaje:</h5>
+                                                    <p><?php echo $resultado['MENSAJE'];?></p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Salir</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                            <?php }?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        <br><br>
+        <br><br><br><br>
     </div>
+
+    
+
+
+
+
 
     <!-- Footer -->
     <div class="container-fluid pt-5 pb-4">

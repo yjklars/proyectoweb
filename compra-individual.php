@@ -3,11 +3,25 @@ include("conexion/conexion.php");
 session_start();
 $con=conectar();
 
+$id=$_GET['id'];
 $id_usuario=$_SESSION['IDUSUARIO'];
 
-$sql="SELECT * FROM usuario WHERE idusuario='$id_usuario'";
+$sql="SELECT * from juego WHERE idjuego='$id'";
 $query=mysqli_query($con,$sql);
 $row=mysqli_fetch_array($query);
+
+$sql3="SELECT MAX(IDBOLETA) AS ULTIMO_ID FROM boleta";
+$query=mysqli_query($con,$sql3);
+if ($query){
+    $resultado=mysqli_fetch_array($query);
+    if($resultado['ULTIMO_ID'] > 0){
+        $ultimo_id=$resultado['ULTIMO_ID'] + 1;
+    }
+    else{
+        $ultimo_id=1;
+    }
+    
+}
 
 ?>
 
@@ -45,10 +59,7 @@ $row=mysqli_fetch_array($query);
                             <a class="nav-link" href="soporte.php">SOPORTE</a>
                         </li>
                         <li>
-                            <?php if(isset($_SESSION['USUARIO'])){
-                                if($_SESSION['ADM'] == 1){?>
-                                    <a class="nav-link" href="panel-de-control-usuario.php">PANEL DE CONTROL</a>
-                                <?php }}?>
+                            <a class="nav-link" href="#"></a>
                         </li>
                     </ul>
                     <?php if(!isset($_SESSION['USUARIO'])){ ?>
@@ -76,62 +87,52 @@ $row=mysqli_fetch_array($query);
     </div>
 
     <div class="container-fluid mb-1 p-0" style="background-color:#121212">
-        <div class="container pt-5 pb-5">
+        <div class="container pt-5">
             <div class="row">
-                <div class="col-3">
-                </div>
-                <div class="col-6 text-center border border-5 bg-secondary-subtle" data-bs-theme="dark">
-                    <div class="row mb-4">
-                        <div class="col text-center">
-                            <h1>Mi Perfil</h1>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Usuario:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['USUARIO'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Correo:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['EMAIL'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Nombre:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['NOMBRE'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Género:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['GENERO'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>País de residencia:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['PAIS'];?></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-3">
+                <h1>Boleta de compra</h1>
+            </div>
+            <div class="row">
+                <div class="col text-center" data-bs-theme="dark">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID Boleta</th>
+                                <th scope="col">Juego</th>
+                                <th scope="col">Precio</th>
+                                <th scope="col">Oferta</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row"><?php echo $ultimo_id;?></th>
+                                <td><?php echo $row['NOMBRE'];?></td>
+                                <td><?php echo $row['PRECIO'];?></td>
+                                <td><?php echo $row['OFERTA'];?></td>
+                                <td><?php echo round($row['PRECIO'] * (1-($row['OFERTA']/100)));?></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+            <form action="conexion/comprar-juego.php" method="POST" novalidate data-bs-theme="dark">
+                <div class="row justify-content-center">
+                    <div class="col-4 text-center">
+                        <input type="text" name="id" value="<?php echo $id;?>" hidden>
+                        <input type="text" name="ultimo_id" value="<?php echo $ultimo_id;?>" hidden>
+                        <p>Seleccione el método de pago:<p>
+                        <select name="metodo_pago" class="form-select form-select-sm" aria-label="Default select example" required>
+                            <option value="Débito">Débito</option>
+                            <option value="Crédito">Crédito</option>
+                        </select>
+                        <button class="btn btn-light btn-lg mt-4" type="submit">Comprar</button>
+                    </div>
+                </div>
+            </form>
+            <br><br><br><br><br><br>
         </div>
     </div>
+
 
     <!-- Footer -->
     <div class="container-fluid pt-5 pb-4">
@@ -199,7 +200,29 @@ $row=mysqli_fetch_array($query);
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+            }, false)
+        })
+        })()
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
 </html>

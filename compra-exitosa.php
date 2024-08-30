@@ -2,12 +2,7 @@
 include("conexion/conexion.php"); 
 session_start();
 $con=conectar();
-
-$id_usuario=$_SESSION['IDUSUARIO'];
-
-$sql="SELECT * FROM usuario WHERE idusuario='$id_usuario'";
-$query=mysqli_query($con,$sql);
-$row=mysqli_fetch_array($query);
+$error=isset($_GET['error'])?$_GET['error'] : '';
 
 ?>
 
@@ -45,10 +40,7 @@ $row=mysqli_fetch_array($query);
                             <a class="nav-link" href="soporte.php">SOPORTE</a>
                         </li>
                         <li>
-                            <?php if(isset($_SESSION['USUARIO'])){
-                                if($_SESSION['ADM'] == 1){?>
-                                    <a class="nav-link" href="panel-de-control-usuario.php">PANEL DE CONTROL</a>
-                                <?php }}?>
+                            <a class="nav-link" href="#"></a>
                         </li>
                     </ul>
                     <?php if(!isset($_SESSION['USUARIO'])){ ?>
@@ -65,7 +57,6 @@ $row=mysqli_fetch_array($query);
                         <a class="nav-link dropdown-toggle text-white-100 p-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $_SESSION['USUARIO'];?></a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="perfil-jugador.php">MI PERFIL</a></li>
-                            <li><a class="dropdown-item" href="carro-de-compra.php">MI CARRITO</a></li>
                             <li><a class="dropdown-item" href="conexion/logout.php">CERRAR SESION</a></li>
                         </ul>
                     </div>
@@ -75,59 +66,27 @@ $row=mysqli_fetch_array($query);
         </nav>
     </div>
 
-    <div class="container-fluid mb-1 p-0" style="background-color:#121212">
-        <div class="container pt-5 pb-5">
-            <div class="row">
-                <div class="col-3">
+    <div class="container-fluid pt-2 pb-5" style="background-color:#121212">
+        <div class="container pt-5 pb-3 px-5 my-5">
+            <h1>Compra exitosa!</h1>
+            <p><br><br>Esperamos que disfrute del juego comprado! No olvide seguir visitando el catálogo de juegos para futuras compras!</p>
+            <p><a href="tienda.php">Volver a la tienda.</a></p>
+        </div>
+        <br><br><br><br>
+    </div>
+
+    <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true" data-bs-theme="dark">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="col-6 text-center border border-5 bg-secondary-subtle" data-bs-theme="dark">
-                    <div class="row mb-4">
-                        <div class="col text-center">
-                            <h1>Mi Perfil</h1>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Usuario:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['USUARIO'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Correo:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['EMAIL'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Nombre:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['NOMBRE'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>Género:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['GENERO'];?></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <div class="col">
-                            <h5>País de residencia:</h5>
-                        </div>
-                        <div class="col">
-                            <p><?php echo $row['PAIS'];?></p>
-                        </div>
-                    </div>
+                <div class="modal-body">
+                    <?php echo $error; ?>
                 </div>
-                <div class="col-3">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -199,7 +158,40 @@ $row=mysqli_fetch_array($query);
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    
+
+
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+            }, false)
+        })
+        })()
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var error = "<?php echo $error; ?>";
+            if (error) {
+                var errorModal = new bootstrap.Modal(document.getElementById('errorModal'));
+                errorModal.show();
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
 </html>

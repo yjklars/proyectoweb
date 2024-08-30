@@ -16,7 +16,12 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
     $_SESSION['IDUSUARIO']=$row['IDUSUARIO'];
     $_SESSION['USUARIO']=$row['USUARIO'];
     $_SESSION['CLAVE']=$row['CLAVE'];
+    $_SESSION['EMAIL']=$row['EMAIL'];
+    $_SESSION['NOMBRE']=$row['$NOMBRE'];
+    $_SESSION['GENERO']=$row['GENERO'];
+    $_SESSION['PAIS']=$row['PAIS'];
     $_SESSION['ADM']=$row['ADM'];
+
     header("Location: tienda.php");
     exit();
   }
@@ -49,6 +54,9 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link" href="tienda.php">TIENDA</a> 
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="categorias.php">TODOS LOS JUEGOS</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="nosotros.php">ACERCA DE NOSOTROS</a>

@@ -2,6 +2,13 @@
 include("conexion/conexion.php"); 
 session_start();
 $con=conectar();
+$val=isset($_GET['val'])?$_GET['val'] : '';
+
+if($val == 1){
+    $text_val="Se ha registrado exitosamente su mensaje!";
+}
+
+
 ?>
 
 
@@ -29,13 +36,19 @@ $con=conectar();
                             <a class="nav-link" href="tienda.php">TIENDA</a> 
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="categorias.php">TODOS LOS JUEGOS</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link active" href="#">ACERCA DE NOSOTROS</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="soporte.php">SOPORTE</a>
                         </li>
                         <li>
-                            <a class="nav-link" href="#"></a>
+                            <?php if(isset($_SESSION['USUARIO'])){
+                                if($_SESSION['ADM'] == 1){?>
+                                    <a class="nav-link" href="panel-de-control-usuario.php">PANEL DE CONTROL</a>
+                            <?php }}?>
                         </li>
                     </ul>
                     <?php if(!isset($_SESSION['USUARIO'])){ ?>
@@ -52,6 +65,7 @@ $con=conectar();
                         <a class="nav-link dropdown-toggle text-white-100 p-1" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><?php echo $_SESSION['USUARIO'];?></a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="perfil-jugador.php">MI PERFIL</a></li>
+                            <li><a class="dropdown-item" href="carro-de-compra.php">MI CARRITO</a></li>
                             <li><a class="dropdown-item" href="conexion/logout.php">CERRAR SESION</a></li>
                         </ul>
                     </div>
@@ -104,7 +118,7 @@ $con=conectar();
         </div>
         <!-- Formulario de contacto simple -->
         <div class="container pb-4">
-            <form class="needs-validation" novalidate>
+            <form action="conexion/insertar-contacto.php" method="POST" class="needs-validation" data-bs-theme="dark" novalidate>
                 <div class="row justify-content-center">
                     <div class="col-4 text-center">
                         <h4>Contáctanos:</h4>
@@ -145,7 +159,22 @@ $con=conectar();
         </div>
     </div>
 
-
+    <div class="modal fade" id="valModal" tabindex="-1" aria-labelledby="valModalLabel" aria-hidden="true" data-bs-theme="dark">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="valModalLabel">Error</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <?php echo $text_val; ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <div class="container-fluid pt-5 pb-4">
@@ -236,6 +265,17 @@ $con=conectar();
         })()
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var val = "<?php echo $val; ?>";
+            if (val) {
+                var errorModal = new bootstrap.Modal(document.getElementById('valModal'));
+                errorModal.show();
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 </body>
 </html>
